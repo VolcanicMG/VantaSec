@@ -19,8 +19,55 @@
   }
 }
 
+html {
+  /* Scale the whole UI up a hair. Tailwind's font sizes and spacing are all
+     rem-based, so bumping the root font-size (from the 16px default) enlarges
+     text and layout proportionally without touching every class. */
+  font-size: 17px;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@page {
+  margin: 1.5cm;
+}
+
+@media print {
+  /* Print only the report (score, diff, result cards); hide interactive chrome. */
+  .no-print {
+    display: none !important;
+  }
+  /* min-h-screen (100vh) on <main> can force an extra blank page when printing. */
+  main {
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+  /* Belt-and-suspenders: show expanded <details> content (also force-opened in JS). */
+  details > *:not(summary) {
+    display: block !important;
+  }
+  /* Flatten the dark theme onto white so the PDF is legible and ink-friendly.
+     Severity colors (emerald/amber/red/orange) are left intact; only the muted
+     slate text is darkened and slate backgrounds are dropped to white. */
+  html,
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+  [class*="bg-slate-"] {
+    background: #fff !important;
+  }
+  [class*="text-slate-"] {
+    color: #1f2937 !important;
+  }
+  [class*="border-"] {
+    border-color: #cbd5e1 !important;
+  }
+  a {
+    color: #1d4ed8 !important;
+  }
 }
