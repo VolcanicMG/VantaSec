@@ -61,8 +61,12 @@ export async function* runScan(rawTarget, opts = {}) {
 
   // Safety gate: refuse private/loopback/internal targets before any socket
   // opens, so this tool can't be used to probe our own network (SSRF/pivot).
+  // Returns the validated public IP; raw-socket checks (ports/TLS) connect to it
+  // directly so a 0-TTL record can't rebind the hostname to an internal address
+  // between this check and the connect.
+  let pinnedIp;
   try {
-    await assertScannable(target.host);
+    ({ ip: pinnedIp } = await assertScannable(target.host));
   } catch (err) {
     yield { type: "error", data: { message: err.message } };
     return;
@@ -90,6 +94,7 @@ export async function* runScan(rawTarget, opts = {}) {
 
   const portsPromise = scanPorts(target.host, ports, {
     concurrency: 150,
+    connectIp: pinnedIp,
     onProgress: (done, total, result) => {
       // Only stream meaningful events: every open port, plus a heartbeat.
       if (result.status === "open" || done % 25 === 0 || done === total) {
@@ -126,7 +131,7 @@ export async function* runScan(rawTarget, opts = {}) {
   const subdomainsPromise = discoverSubdomains(target.host);
 
   const checks = [
-    ["tls", inspectTls(target.host)],
+    ["tls", inspectTls(target.host, { connectIp: pinnedIp })],
     ["dns", lookupDns(target.host)],
     ["headers", auditHeaders(target.httpUrl)],
     ["redirect", checkRedirect(target.host)],

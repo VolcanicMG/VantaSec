@@ -9,6 +9,7 @@
  */
 
 import { readCappedText } from "./http.js";
+import { safeFetch } from "./safeFetch.js";
 
 /** Hard cap on the HTML body we will read/parse. */
 const MAX_HTML_BYTES = 3_000_000;
@@ -227,8 +228,7 @@ export async function auditContent(url, opts = {}) {
   const timer = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const res = await fetch(url, {
-      redirect: "follow",
+    const res = await safeFetch(url, {
       signal: controller.signal,
       headers: { "user-agent": "Vantasec-Scanner/0.1 (+security self-audit)" },
     });

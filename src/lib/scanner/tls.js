@@ -41,13 +41,14 @@ function gradeTls(p) {
 /**
  * Probe whether the server will negotiate a specific (legacy) TLS version.
  *
- * @param {string} host - Target hostname.
+ * @param {string} host - Target hostname (used for SNI).
  * @param {number} port - TLS port.
  * @param {string} version - Pinned version, e.g. "TLSv1.1".
  * @param {number} timeout - Connection timeout in ms.
+ * @param {string} connectHost - IP/host to actually connect to (the guard-pinned IP).
  * @returns {Promise<boolean>} True if the server accepted that version.
  */
-function probeProtocol(host, port, version, timeout) {
+function probeProtocol(host, port, version, timeout, connectHost) {
   return new Promise((resolve) => {
     let done = false;
     /** @param {boolean} accepted */
@@ -59,8 +60,10 @@ function probeProtocol(host, port, version, timeout) {
     };
     let socket;
     try {
+      // Connect to the validated IP, but keep SNI = hostname so the right cert
+      // is presented and vhost routing still works.
       socket = tls.connect(
-        { host, port, servername: host, rejectUnauthorized: false, timeout, minVersion: version, maxVersion: version },
+        { host: connectHost, port, servername: host, rejectUnauthorized: false, timeout, minVersion: version, maxVersion: version },
         () => finish(true)
       );
     } catch {
@@ -79,12 +82,17 @@ function probeProtocol(host, port, version, timeout) {
  * @param {object} [opts]
  * @param {number} [opts.port=443] - TLS port.
  * @param {number} [opts.timeout=6000] - Connection timeout in ms.
+ * @param {string} [opts.connectIp] - Pre-validated public IP to connect to
+ *   instead of re-resolving `host` (prevents DNS-rebinding to an internal IP).
+ *   SNI/cert validation still use `host`.
  * @returns {Promise<object>} { ok, protocol, protocolWeak, weakProtocols[],
  *   issuer, subject, validFrom, validTo, daysRemaining, authorized, authError, error }.
  */
 export function inspectTls(host, opts = {}) {
   const port = opts.port ?? 443;
   const timeout = opts.timeout ?? 6000;
+  // Connect to the guard-validated IP when provided; never re-resolve the name.
+  const connectHost = opts.connectIp ?? host;
 
   return new Promise((resolve) => {
     let settled = false;
@@ -101,7 +109,7 @@ export function inspectTls(host, opts = {}) {
     let ocspStapled = false;
 
     const socket = tls.connect(
-      { host, port, servername: host, rejectUnauthorized: false, timeout, requestOCSP: true, ALPNProtocols: ["h2", "http/1.1"] },
+      { host: connectHost, port, servername: host, rejectUnauthorized: false, timeout, requestOCSP: true, ALPNProtocols: ["h2", "http/1.1"] },
       async () => {
         const cert = socket.getPeerCertificate();
         const protocol = socket.getProtocol();
@@ -115,7 +123,7 @@ export function inspectTls(host, opts = {}) {
 
         // Probe deprecated protocols in parallel; any acceptance is a finding.
         const accepted = await Promise.all(
-          LEGACY_VERSIONS.map((v) => probeProtocol(host, port, v, timeout))
+          LEGACY_VERSIONS.map((v) => probeProtocol(host, port, v, timeout, connectHost))
         );
         const weakProtocols = LEGACY_VERSIONS.filter((_, i) => accepted[i]);
         // Negotiated protocol is weak if it's anything below TLS 1.2.

@@ -11,6 +11,7 @@
  */
 
 import { readCappedText } from "./http.js";
+import { safeFetch } from "./safeFetch.js";
 
 const MAX_BYTES = 3_000_000;
 const MAX_ENTRIES = 400;
@@ -24,7 +25,7 @@ async function getText(url, timeout) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
   try {
-    const res = await fetch(url, { redirect: "follow", signal: controller.signal, headers: { "user-agent": UA } });
+    const res = await safeFetch(url, { signal: controller.signal, headers: { "user-agent": UA } });
     if (!res.ok) throw new Error(`status ${res.status}`);
     return await readCappedText(res, MAX_BYTES);
   } finally {

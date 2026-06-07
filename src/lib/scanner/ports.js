@@ -36,11 +36,15 @@ function probeFor(port) {
  * @param {object} [opts]
  * @param {number} [opts.timeout=2500] - Per-port timeout in ms.
  * @param {number} [opts.bannerWait=600] - Extra ms to wait for banner data after connect.
+ * @param {string} [opts.connectIp] - Pre-validated public IP to connect to
+ *   instead of re-resolving `host` (prevents DNS-rebinding to an internal IP).
  * @returns {Promise<{port:number,status:string,service:string,version:(string|null),banner:(string|null)}>}
  */
 export function scanPort(host, port, opts = {}) {
   const timeout = opts.timeout ?? 2500;
   const bannerWait = opts.bannerWait ?? 600;
+  // Connect to the guard-validated IP when provided; never re-resolve the name.
+  const connectHost = opts.connectIp ?? host;
 
   return new Promise((resolve) => {
     const socket = new net.Socket();
@@ -86,7 +90,7 @@ export function scanPort(host, port, opts = {}) {
       finish(err.code === "ECONNREFUSED" ? "closed" : "filtered");
     });
 
-    socket.connect(port, host);
+    socket.connect(port, connectHost);
   });
 }
 
@@ -98,6 +102,8 @@ export function scanPort(host, port, opts = {}) {
  * @param {object} [opts]
  * @param {number} [opts.concurrency=100] - Max simultaneous socket probes.
  * @param {number} [opts.timeout=2500] - Per-port timeout in ms.
+ * @param {string} [opts.connectIp] - Pre-validated public IP to connect to
+ *   instead of re-resolving `host` (DNS-rebinding protection); forwarded to scanPort.
  * @param {(done:number,total:number,result:object)=>void} [opts.onProgress] -
  *   Called after each port resolves, for live UI updates.
  * @returns {Promise<Array<object>>} Per-port results (see scanPort).

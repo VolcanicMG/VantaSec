@@ -7,6 +7,8 @@
  * serving content over http without forcing an upgrade.
  */
 
+import { safeFetch } from "./safeFetch.js";
+
 /**
  * Parse an HSTS header value into its component directives.
  *
@@ -39,14 +41,14 @@ export async function checkRedirect(host, opts = {}) {
   const timer = setTimeout(() => controller.abort(), timeout);
 
   try {
-    // Hit plain http and follow redirects; check we end up on https.
-    const res = await fetch(`http://${host}`, {
+    // Hit plain http and follow redirects (each hop SSRF-validated); check we
+    // end up on https.
+    const res = await safeFetch(`http://${host}`, {
       method: "GET",
-      redirect: "follow",
       signal: controller.signal,
       headers: { "user-agent": "Vantasec-Scanner/0.1 (+security self-audit)" },
     });
-    const finalUrl = res.url || "";
+    const finalUrl = res.finalUrl || "";
     const redirects = finalUrl.startsWith("https://");
     const hsts = parseHsts(res.headers.get("strict-transport-security"));
     return { ok: true, redirects, finalUrl, hsts };

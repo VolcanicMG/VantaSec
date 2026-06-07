@@ -8,6 +8,8 @@
  * status code + Content-Type header only — never the body.
  */
 
+import { safeFetch } from "./safeFetch.js";
+
 /** Files to probe, with where they live and whether absence is a finding. */
 const FILES = [
   { key: "securityTxt", paths: ["/.well-known/security.txt", "/security.txt"], graded: true },
@@ -46,7 +48,7 @@ async function exists(url, timeout) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
   try {
-    const res = await fetch(url, { method: "GET", redirect: "follow", signal: controller.signal });
+    const res = await safeFetch(url, { method: "GET", signal: controller.signal });
     return res.status === 200;
   } catch {
     return false;

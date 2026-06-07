@@ -4,8 +4,10 @@
  * Single responsibility: fetch the target over HTTPS and grade the presence of
  * the security headers that lock down a public site (HSTS, CSP, etc.), surface
  * tech-fingerprint headers, and audit Set-Cookie flags (Secure/HttpOnly/
- * SameSite). Uses global fetch (undici).
+ * SameSite). Uses safeFetch so redirects can't bounce us onto internal hosts.
  */
+
+import { safeFetch } from "./safeFetch.js";
 
 /** Headers we grade, with a short rationale shown in the UI. */
 const GRADED_HEADERS = [
@@ -120,9 +122,8 @@ export async function auditHeaders(url, opts = {}) {
   const timer = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const res = await fetch(url, {
+    const res = await safeFetch(url, {
       method: "GET",
-      redirect: "follow",
       signal: controller.signal,
       headers: { "user-agent": "Vantasec-Scanner/0.1 (+security self-audit)" },
     });

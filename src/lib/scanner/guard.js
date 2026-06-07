@@ -77,8 +77,16 @@ export function ipBlockReason(ip) {
  * Throws if the host resolves (even partially) to a protected range, which
  * prevents DNS-rebinding-style tricks where a name points inward.
  *
+ * Returns the validated address set and a single pinned IP. Callers that open
+ * raw sockets (port scan, TLS) MUST connect to the returned `ip` rather than
+ * re-resolving the hostname themselves — otherwise a 0-TTL record can flip
+ * public→private between this check and the connect (a time-of-use DNS-rebinding
+ * bypass). SNI/Host should still carry the original hostname.
+ *
  * @param {string} host - Hostname or IP literal to validate.
- * @returns {Promise<void>} Resolves if safe to scan.
+ * @returns {Promise<{host:string, ip:string, addresses:string[]}>}
+ *   The validated host, a pinned public IP to connect to, and every resolved
+ *   address (all confirmed public).
  * @throws {Error} With a clear reason if the target must not be scanned.
  */
 export async function assertScannable(host) {
@@ -87,26 +95,30 @@ export async function assertScannable(host) {
     throw new Error("Refusing to scan localhost");
   }
 
-  // If the user passed an IP literal, check it directly.
+  // If the user passed an IP literal, check it directly — it is its own pin.
   const literalReason = ipBlockReason(host);
   if (literalReason) {
     throw new Error(`Refusing to scan non-public address: ${literalReason}`);
   }
+  if (isIPv4(host) || host.includes(":")) {
+    return { host, ip: host, addresses: [host] };
+  }
 
   // Otherwise resolve the name to all addresses and check each one.
-  if (!isIPv4(host) && !host.includes(":")) {
-    let addrs;
-    try {
-      addrs = await lookup(host, { all: true });
-    } catch {
-      throw new Error(`Could not resolve host: ${host}`);
-    }
-    if (!addrs.length) throw new Error(`Host did not resolve: ${host}`);
-    for (const { address } of addrs) {
-      const reason = ipBlockReason(address);
-      if (reason) {
-        throw new Error(`Refusing to scan ${host} — resolves to non-public address: ${reason}`);
-      }
+  let addrs;
+  try {
+    addrs = await lookup(host, { all: true });
+  } catch {
+    throw new Error(`Could not resolve host: ${host}`);
+  }
+  if (!addrs.length) throw new Error(`Host did not resolve: ${host}`);
+  for (const { address } of addrs) {
+    const reason = ipBlockReason(address);
+    if (reason) {
+      throw new Error(`Refusing to scan ${host} — resolves to non-public address: ${reason}`);
     }
   }
+  // Pin to the first validated address; every address was confirmed public, so
+  // any is safe — using a fixed one removes the re-resolution rebinding window.
+  return { host, ip: addrs[0].address, addresses: addrs.map((a) => a.address) };
 }
