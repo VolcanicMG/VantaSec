@@ -5,12 +5,8 @@
 <br>
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.2.7-22d3ee?logo=nextdotjs&logoColor=white)
-![React](https://img.shields.io/badge/React-19-22d3ee?logo=react&logoColor=white)
-![JavaScript](https://img.shields.io/badge/language-JavaScript-3a8fa3)
-![scanner](https://img.shields.io/badge/scanner-pure--Node-2ea44f)
-![no nmap](https://img.shields.io/badge/external%20binaries-none%20(no%20nmap)-2ea44f)
+![scanner](https://img.shields.io/badge/scanner-pure--Node%20%C2%B7%20no%20nmap-2ea44f)
 ![MCP](https://img.shields.io/badge/MCP-ready-22d3ee)
-![tests](https://img.shields.io/badge/tests-Vitest-3a8fa3)
 ![license](https://img.shields.io/badge/license-MIT-22d3ee)
 
 **Point it at a server you own and confirm it's actually locked down.**
