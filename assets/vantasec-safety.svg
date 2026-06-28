@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="590" viewBox="0 0 1000 590" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<rect width="1000" height="590" rx="20" fill="#070b12"/>
+<rect x="1" y="1" width="998" height="588" rx="19" fill="none" stroke="#1b2838"/>
+<g transform="translate(40,40)">
+<circle r="15" fill="none" stroke="#3a8fa3" stroke-width="1.4"/>
+<circle r="8" fill="none" stroke="#22d3ee" stroke-width="1.6"/>
+<circle r="2.2" fill="#22d3ee"/>
+<line x1="0" y1="0" x2="10.5" y2="-10.5" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round"/>
+</g>
+<text x="66" y="46" fill="#e8eef6" font-size="24" font-weight="700">vanta<tspan fill="#22d3ee">sec</tspan></text>
+<text x="960" y="34" text-anchor="end" fill="#8595a8" font-size="12" letter-spacing="3" font-weight="600">WATCHING OUR OWN BACK</text>
+<text x="960" y="52" text-anchor="end" fill="#8595a8" font-size="11.5">a scanner is a fat target — so it reads, never executes</text>
+<line x1="40" y1="70" x2="960" y2="70" stroke="#1b2838"/>
+
+<!-- card 1 -->
+<rect x="40" y="92" width="452" height="184" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<circle cx="74" cy="126" r="16" fill="#0f2118" stroke="#5bbf93" stroke-width="1.6"/>
+<text x="74" y="132" text-anchor="middle" fill="#5bbf93" font-size="16" font-weight="700">1</text>
+<text x="106" y="122" fill="#5bbf93" font-size="12.5" font-weight="700" letter-spacing="1.5">NO REMOTE CODE EXECUTION</text>
+<text x="106" y="138" fill="#8595a8" font-size="10.5" letter-spacing="1">PROTECTION</text>
+<line x1="64" y1="156" x2="468" y2="156" stroke="#1b2838"/>
+<text x="64" y="182" fill="#e8eef6" font-size="12.5">Banners, headers and certs are treated as</text>
+<text x="64" y="202" fill="#e8eef6" font-size="12.5">inert strings. React auto-escapes on render</text>
+<text x="64" y="222" fill="#e8eef6" font-size="12.5">&#8212; no <tspan fill="#22d3ee" font-family="Consolas, Menlo, monospace" font-size="11.5">dangerouslySetInnerHTML</tspan> &#8212; so a</text>
+<text x="64" y="242" fill="#e8eef6" font-size="12.5">hostile response can't inject script into the</text>
+<text x="64" y="262" fill="#e8eef6" font-size="12.5">dashboard.</text>
+
+<!-- card 2 -->
+<rect x="508" y="92" width="452" height="184" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<circle cx="542" cy="126" r="16" fill="#0f2118" stroke="#5bbf93" stroke-width="1.6"/>
+<text x="542" y="132" text-anchor="middle" fill="#5bbf93" font-size="16" font-weight="700">2</text>
+<text x="574" y="122" fill="#5bbf93" font-size="12.5" font-weight="700" letter-spacing="1.5">SSRF / PIVOT PROTECTION</text>
+<text x="574" y="138" fill="#8595a8" font-size="10.5" letter-spacing="1">PROTECTION</text>
+<line x1="532" y1="156" x2="936" y2="156" stroke="#1b2838"/>
+<text x="532" y="182" fill="#e8eef6" font-size="12.5"><tspan fill="#22d3ee" font-family="Consolas, Menlo, monospace" font-size="11.5">guard.js</tspan> resolves the target and refuses</text>
+<text x="532" y="202" fill="#e8eef6" font-size="12.5">any private, loopback or link-local host</text>
+<text x="532" y="222" fill="#e8eef6" font-size="12.5">&#8212; incl. <tspan fill="#e8736b">169.254.169.254</tspan> cloud metadata,</text>
+<text x="532" y="242" fill="#e8eef6" font-size="12.5">CGNAT and reserved ranges &#8212; so it can't</text>
+<text x="532" y="262" fill="#e8eef6" font-size="12.5">be aimed at your own internal network.</text>
+
+<!-- card 3 -->
+<rect x="40" y="296" width="452" height="184" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<circle cx="74" cy="330" r="16" fill="#0f2118" stroke="#5bbf93" stroke-width="1.6"/>
+<text x="74" y="336" text-anchor="middle" fill="#5bbf93" font-size="16" font-weight="700">3</text>
+<text x="106" y="326" fill="#5bbf93" font-size="12.5" font-weight="700" letter-spacing="1.5">RESOURCE LIMITS</text>
+<text x="106" y="342" fill="#8595a8" font-size="10.5" letter-spacing="1">PROTECTION</text>
+<line x1="64" y1="360" x2="468" y2="360" stroke="#1b2838"/>
+<text x="64" y="386" fill="#e8eef6" font-size="12.5">Per-port timeouts, bounded concurrency, a</text>
+<text x="64" y="406" fill="#e8eef6" font-size="12.5">256-char banner cap and a hard <tspan fill="#22d3ee" font-family="Consolas, Menlo, monospace" font-size="11.5">MAX_PORTS</tspan>.</text>
+<text x="64" y="426" fill="#e8eef6" font-size="12.5">Header / redirect checks read status +</text>
+<text x="64" y="446" fill="#e8eef6" font-size="12.5">headers only &#8212; never the body; trusted-API</text>
+<text x="64" y="466" fill="#e8eef6" font-size="12.5">bodies (NVD, CertSpotter) are size-capped.</text>
+
+<!-- card 4 -->
+<rect x="508" y="296" width="452" height="184" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<circle cx="542" cy="330" r="16" fill="#0f2118" stroke="#5bbf93" stroke-width="1.6"/>
+<text x="542" y="336" text-anchor="middle" fill="#5bbf93" font-size="16" font-weight="700">4</text>
+<text x="574" y="326" fill="#5bbf93" font-size="12.5" font-weight="700" letter-spacing="1.5">ABUSE PROTECTION</text>
+<text x="574" y="342" fill="#8595a8" font-size="10.5" letter-spacing="1">PROTECTION</text>
+<line x1="532" y1="360" x2="936" y2="360" stroke="#1b2838"/>
+<text x="532" y="386" fill="#e8eef6" font-size="12.5">The <tspan fill="#22d3ee" font-family="Consolas, Menlo, monospace" font-size="11.5">POST /api/scan</tspan> route is rate-limited</text>
+<text x="532" y="406" fill="#e8eef6" font-size="12.5">per IP (in-memory). The app ships a strict</text>
+<text x="532" y="426" fill="#e8eef6" font-size="12.5">nonce-based CSP (no <tspan fill="#22d3ee" font-family="Consolas, Menlo, monospace" font-size="11.5">unsafe-inline</tspan>) plus</text>
+<text x="532" y="446" fill="#e8eef6" font-size="12.5">HSTS and the standard hardening headers</text>
+<text x="532" y="466" fill="#e8eef6" font-size="12.5">on every response.</text>
+
+<!-- rule line -->
+<rect x="40" y="500" width="920" height="56" rx="13" fill="#0d1a24" stroke="#22d3ee"/>
+<text x="500" y="525" text-anchor="middle" fill="#22d3ee" font-size="11.5" letter-spacing="2" font-weight="700">THE ONE RULE</text>
+<text x="500" y="546" text-anchor="middle" fill="#e8eef6" font-size="14" font-weight="600">Only scan systems you own or are authorized to test.</text>
+</svg>

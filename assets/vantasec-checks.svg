@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="612" viewBox="0 0 1000 612" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<rect width="1000" height="612" rx="20" fill="#070b12"/>
+<rect x="1" y="1" width="998" height="610" rx="19" fill="none" stroke="#1b2838"/>
+<g transform="translate(40,40)">
+<circle r="15" fill="none" stroke="#3a8fa3" stroke-width="1.4"/>
+<circle r="8" fill="none" stroke="#22d3ee" stroke-width="1.6"/>
+<circle r="2.2" fill="#22d3ee"/>
+<line x1="0" y1="0" x2="10.5" y2="-10.5" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round"/>
+</g>
+<text x="66" y="46" fill="#e8eef6" font-size="24" font-weight="700">vanta<tspan fill="#22d3ee">sec</tspan></text>
+<text x="960" y="34" text-anchor="end" fill="#8595a8" font-size="12" letter-spacing="3" font-weight="600">WHAT IT SCANS</text>
+<text x="960" y="52" text-anchor="end" fill="#8595a8" font-size="11.5">ten single-responsibility checks · one pure-Node core</text>
+<line x1="40" y1="70" x2="960" y2="70" stroke="#1b2838"/>
+<rect x="40" y="90" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="40" y="90" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="74" cy="133" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="74" y="138" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">1</text>
+<text x="102" y="120" fill="#e8eef6" font-size="15.5" font-weight="700">Open ports</text>
+<text x="102" y="140" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">ports.js</text>
+<text x="102" y="160" fill="#8595a8" font-size="11.5">TCP connect scan + banner grab (service/version) — the mini-nmap</text>
+<rect x="508" y="90" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="508" y="90" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="542" cy="133" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="542" y="138" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">2</text>
+<text x="570" y="120" fill="#e8eef6" font-size="15.5" font-weight="700">TLS &#183; cert</text>
+<text x="570" y="140" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">tls.js</text>
+<text x="570" y="160" fill="#8595a8" font-size="11.5">Protocol, cert facts, cipher strength, OCSP, ALPN — A&#8211;F TLS grade</text>
+<rect x="40" y="190" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="40" y="190" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="74" cy="233" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="74" y="238" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">3</text>
+<text x="102" y="220" fill="#e8eef6" font-size="15.5" font-weight="700">DNS &#183; email</text>
+<text x="102" y="240" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">dns.js</text>
+<text x="102" y="260" fill="#8595a8" font-size="11.5">SPF/DMARC/DKIM, DNSSEC, BIMI, MTA-STS — an email-auth grade</text>
+<rect x="508" y="190" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="508" y="190" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="542" cy="233" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="542" y="238" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">4</text>
+<text x="570" y="220" fill="#e8eef6" font-size="15.5" font-weight="700">HTTP headers</text>
+<text x="570" y="240" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">headers.js</text>
+<text x="570" y="260" fill="#8595a8" font-size="11.5">HSTS, CSP analysis, cookie flags, tech + CDN/WAF/HTTP3 fingerprint</text>
+<rect x="40" y="290" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="40" y="290" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="74" cy="333" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="74" y="338" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">5</text>
+<text x="102" y="320" fill="#e8eef6" font-size="15.5" font-weight="700">HTTP &#8594; HTTPS</text>
+<text x="102" y="340" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">redirect.js</text>
+<text x="102" y="360" fill="#8595a8" font-size="11.5">Is plain HTTP forced to HTTPS? Plus the HSTS policy detail</text>
+<rect x="508" y="290" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="508" y="290" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="542" cy="333" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="542" y="338" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">6</text>
+<text x="570" y="320" fill="#e8eef6" font-size="15.5" font-weight="700">Disclosure files</text>
+<text x="570" y="340" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">disclosure.js</text>
+<text x="570" y="360" fill="#8595a8" font-size="11.5">security.txt / robots + exposed .git / .env / backup probing</text>
+<rect x="40" y="390" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="40" y="390" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="74" cy="433" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="74" y="438" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">7</text>
+<text x="102" y="420" fill="#e8eef6" font-size="15.5" font-weight="700">Page content</text>
+<text x="102" y="440" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">content.js</text>
+<text x="102" y="460" fill="#8595a8" font-size="11.5">Leaked secrets, vulnerable JS libs, mixed content, missing SRI</text>
+<rect x="508" y="390" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="508" y="390" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="542" cy="433" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="542" y="438" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">8</text>
+<text x="570" y="420" fill="#e8eef6" font-size="15.5" font-weight="700">Subdomains</text>
+<text x="570" y="440" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">subdomains.js</text>
+<text x="570" y="460" fill="#8595a8" font-size="11.5">Passive CT discovery (CertSpotter) + opt-in attack-surface pivot</text>
+<rect x="40" y="490" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="40" y="490" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="74" cy="533" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="74" y="538" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">9</text>
+<text x="102" y="520" fill="#e8eef6" font-size="15.5" font-weight="700">IP &#183; network</text>
+<text x="102" y="540" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">geo.js</text>
+<text x="102" y="560" fill="#8595a8" font-size="11.5">GeoIP, ASN / owner, reverse DNS for the resolved address</text>
+<rect x="508" y="490" width="452" height="86" rx="13" fill="#0e1622" stroke="#1b2838"/>
+<rect x="508" y="490" width="5" height="86" rx="2.5" fill="#22d3ee"/>
+<circle cx="542" cy="533" r="15" fill="none" stroke="#22d3ee" stroke-width="1.8"/>
+<text x="542" y="538" text-anchor="middle" fill="#22d3ee" font-size="15" font-weight="700">10</text>
+<text x="570" y="520" fill="#e8eef6" font-size="15.5" font-weight="700">Known CVEs</text>
+<text x="570" y="540" fill="#22d3ee" font-size="12" font-family="Consolas, Menlo, monospace">cve.js</text>
+<text x="570" y="560" fill="#8595a8" font-size="11.5">NVD lookup against detected product / versions (optional key)</text>
+</svg>

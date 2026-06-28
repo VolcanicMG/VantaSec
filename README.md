@@ -1,8 +1,32 @@
-# Vantasec
+<div align="center">
 
-Scan a website or IP **you own or are authorized to test** for its public-facing security posture: open ports, TLS/certificate health, DNS & email hardening, and HTTP security headers. Think of it as a self-audit dashboard — point it at your server and confirm everything is locked down.
+<img src="assets/vantasec-banner.svg" alt="vantasec — know your public attack surface before someone else does" width="780">
 
-Built with Next.js 16 (App Router, JavaScript) and a pure-Node scanner core — **no nmap or other external binaries required**.
+<br>
+
+![Next.js](https://img.shields.io/badge/Next.js-16.2.7-22d3ee?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19-22d3ee?logo=react&logoColor=white)
+![JavaScript](https://img.shields.io/badge/language-JavaScript-3a8fa3)
+![scanner](https://img.shields.io/badge/scanner-pure--Node-2ea44f)
+![no nmap](https://img.shields.io/badge/external%20binaries-none%20(no%20nmap)-2ea44f)
+![MCP](https://img.shields.io/badge/MCP-ready-22d3ee)
+![tests](https://img.shields.io/badge/tests-Vitest-3a8fa3)
+![license](https://img.shields.io/badge/license-MIT-22d3ee)
+
+**Point it at a server you own and confirm it's actually locked down.**
+
+A self-audit dashboard for your public-facing security posture — open ports, TLS,
+DNS & email hardening, HTTP headers, and more. The view an attacker gets, before they do.
+
+</div>
+
+---
+
+## Contents
+
+- [Quick start](#quick-start) · [What it checks](#what-it-checks) · [CVE lookup](#cve-lookup)
+- [Command line & CI gate](#command-line--ci-gate) · [MCP server](#mcp-server) · [Score & automate](#score--automate)
+- [Architecture](#architecture) · [Safety](#safety--watching-our-own-back) · [Tests](#tests)
 
 ## Quick start
 
@@ -15,7 +39,15 @@ npm run scan -- example.com      # one-off scan from the terminal (CI gate)
 npm run mcp                      # run as an MCP server (stdio)
 ```
 
+Scan a website or IP **you own or are authorized to test** for its public-facing
+security posture. Built with Next.js 16 (App Router, JavaScript) and a pure-Node
+scanner core — **no nmap or other external binaries required**.
+
 ## What it checks
+
+<div align="center">
+  <img src="assets/vantasec-checks.svg" alt="What vantasec scans: ten single-responsibility checks — open ports (ports.js), TLS/cert (tls.js), DNS/email (dns.js), HTTP headers (headers.js), HTTP→HTTPS redirect (redirect.js), disclosure files (disclosure.js), page content (content.js), subdomains (subdomains.js), IP/network (geo.js), known CVEs (cve.js)." width="900">
+</div>
 
 | Check | Module | What it tells you |
 |-------|--------|-------------------|
@@ -65,6 +97,14 @@ npm run mcp
 
 Register it in an MCP client with command `npm`, args `["run","mcp"]`, and the repo as the working directory. It exposes one tool, `scan`, taking `{ target, preset? }` and returning a graded report with remediation hints.
 
+## Score & automate
+
+The same graded result, three ways — on screen, as a CI exit code, or handed to an AI agent:
+
+<div align="center">
+  <img src="assets/vantasec-score.svg" alt="Score, gate and automate: an overall 0–100 security score plus A–F grade on the dashboard; a CLI CI gate (npm run scan -- <target> --min-grade B with exit codes 0 pass / 1 below threshold / 2 error); and an MCP scan tool taking { target, preset? } that returns a graded report with remediation hints." width="900">
+</div>
+
 ## Architecture
 
 Each checker is a single-responsibility module under `src/lib/scanner/`:
@@ -78,9 +118,17 @@ Each checker is a single-responsibility module under `src/lib/scanner/`:
 
 The API route `POST /api/scan` adapts that generator to a streaming **NDJSON** response (one JSON event per line), so the browser renders progress live without websockets. The `useScan` hook parses the stream; the page composes form + progress + result cards.
 
+<div align="center">
+  <img src="assets/vantasec-pipeline.svg" alt="How vantasec works: target.js normalizes input → guard.js is the safety gate that refuses private/loopback/link-local/internal targets (169.254.169.254 metadata, CGNAT, reserved) → index.js orchestrator runs each check as an async generator yielding progress → POST /api/scan streams it as NDJSON → live dashboard renders with no websockets. One scanner core feeds three entrypoints: the web app, the CLI (bin/vantasec-scan.mjs), and the MCP server (bin/vantasec-mcp.mjs)." width="900">
+</div>
+
 ## Safety — watching our own back
 
 This tool only *reads* what a target volunteers; it never executes or evaluates any response data. Specific protections:
+
+<div align="center">
+  <img src="assets/vantasec-safety.svg" alt="Vantasec's four self-protections: (1) no remote code execution — banners/headers/certs are inert strings, React auto-escapes, no dangerouslySetInnerHTML; (2) SSRF/pivot protection — guard.js refuses private, loopback and link-local hosts including 169.254.169.254 metadata, CGNAT and reserved ranges; (3) resource limits — per-port timeouts, bounded concurrency, 256-char banner cap, MAX_PORTS, header/redirect read status+headers only, trusted-API bodies size-capped; (4) abuse protection — per-IP rate limit, nonce-based CSP with no unsafe-inline, HSTS and hardening headers. Rule: only scan systems you own or are authorized to test." width="900">
+</div>
 
 1. **No remote code execution.** Banners, headers, and certs are treated as inert strings. The UI renders them as text (React auto-escapes — no `dangerouslySetInnerHTML`), so a hostile banner can't inject script into the dashboard.
 2. **SSRF / pivot protection.** `guard.js` resolves the target first and **refuses** any host that maps to a private, loopback, link-local (incl. `169.254.169.254` cloud metadata), CGNAT, or reserved range — so the scanner can't be aimed at your own internal network.
@@ -96,3 +144,7 @@ Unit tests (Vitest) cover the pure logic — especially the security guard:
 ```bash
 npm test
 ```
+
+## License
+
+[MIT](LICENSE) © 2026 Ethan Hoff
