@@ -333,13 +333,13 @@ export function HeadersCard({ data }) {
         <div className="mt-3 border-t border-slate-800 pt-3">
           <p className="mb-1 text-xs uppercase text-slate-500">Cookies</p>
           <ul className="space-y-1 text-xs">
-            {data.cookies.map((c) => {
+            {data.cookies.map((c, i) => {
               const flags = [];
               if (!c.secure) flags.push("Secure");
               if (!c.httpOnly) flags.push("HttpOnly");
               if (!c.sameSite) flags.push("SameSite");
               return (
-                <li key={c.name} className="flex items-center justify-between gap-3">
+                <li key={`${c.name}-${i}`} className="flex items-center justify-between gap-3">
                   <span className="font-mono text-slate-300">{c.name}</span>
                   {flags.length === 0 ? (
                     <span className="text-emerald-400">all flags set</span>
